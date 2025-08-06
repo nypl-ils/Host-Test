@@ -9,7 +9,7 @@
     <title>Feedback Form</title>
     <style>
         form {
-            width: 500px;
+            width: 80%;
             border: 1px solid #eee;
             padding: 25px;
             margin:100px auto;
@@ -29,12 +29,17 @@
         
         input[type=submit] {
             height: 40px;
-            background-color: rgb(206, 14, 45);
+            background-color: rgb(0, 113, 206);
             color: white;
         }
         .output{
             font-family: cursive;
             text-align: center;
+        }
+        .errorMsg{
+            font-family: cursive;
+            text-align: center;
+            color: #e20d0d;
         }
        
     </style>
@@ -53,10 +58,11 @@
     </nav>
    -->
 
-<!--<div id="header_container" style="min-height: 223px">
+<!---
+<div id="header_container" style="min-height: 223px">
       <script type="text/javascript" src="https://header.nypl.org/dgx-header.min.js?urls=absolute" async></script>
-</div>-->    
-
+</div>    
+-->
 
     <form name="myForm">
         <div class="mb-3">
@@ -72,7 +78,7 @@
         <br>
         <div class="mb-3"></div>
             <label for="message" class="form-label"><span>Message:</span></label>
-            <textarea class="form-control" name="message" aria-label="feedback" placeholder="Feedback message" style="height: 200px;"></textarea>
+            <textarea class="form-control" name="message" aria-label="feedback" placeholder="Feedback message" id="message" style="height: 200px;"></textarea>
         </div>
         <br>
         <input type="submit" class="btn btn-primary" value="Send Message" id="submitButton"/> 
@@ -84,6 +90,7 @@
     
     </form>
     <div class="output"></div>
+    <div class="errorMsg"></div>
     <script>
     //Ajax call here using fetch
     const url = "https://script.google.com/macros/s/AKfycbzPHXm5X4AN7gDdqAadyF3M2hM96aXI7jxlBHpLDmJI7OSu7eH6hh-4D0jM5r3Cojq6/exec"
@@ -92,11 +99,39 @@
     console.log(form);
     form.addEventListener("submit", function(e){
         e.preventDefault();
-        createMessage();
+
+        var nameInput = document.getElementById("name");
+        var emailInput = document.getElementById("email");
+        var messageInput = document.getElementById("message");
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (nameInput.value==null||nameInput.value==""){
+
+            document.querySelector(".errorMsg").innerHTML = "Please provide your name";
+            return false;
+            
+        } else if (emailInput.value==null||emailInput.value==""||emailInput.value.indexOf('@') == -1 || !emailRegex.test(emailInput.value)){ 
+            
+            document.querySelector(".errorMsg").innerHTML = "Please provide a proper email.";
+            return false;
+
+        }  else if (messageInput.value==null||messageInput.value==""){ 
+            
+            document.querySelector(".errorMsg").innerHTML = "Please provide your feedback message.";
+            return false;
+
+        }  else {
+
         const submitButton = document.getElementById('submitButton');
         const formSpinner = document.getElementById('formSpinner');
-         
+        document.querySelector(".errorMsg").innerHTML = "";    
+        createMessage();
+        
+        }
     })
+
+
+
 
     function createMessage() {
         console.log("submitted")
