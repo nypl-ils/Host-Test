@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <style>
+        form {
+            width: 300px;
+            border: 1px solid #eee;
+            padding: 25px;
+            margin:0 auto;
+        }
+        
+        input,
+        textarea {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        span {
+            margin: 10px 0 0;
+            display: inline-block;
+            font-family: cursive;
+        }
+        
+        input[type=submit] {
+            height: 40px;
+            background-color: rgb(210, 13, 10);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <form name="myForm"> <span>Name:</span>
+        <input type="text" name="name" value="Name">
+        <br><span>Email:</span>
+        <input type="email" name="email" value="example@example.com">
+        <br><span> Message:</span>
+        <textarea name="message">Feedback message</textarea>
+        <br>
+        <input type="submit" value="Send Message" /> </form>
+    <div class="output"></div>
+    <script>
+    //Ajax call here using fetch
+    const url = "https://script.google.com/macros/s/AKfycbzPHXm5X4AN7gDdqAadyF3M2hM96aXI7jxlBHpLDmJI7OSu7eH6hh-4D0jM5r3Cojq6/exec"
+
+    const form = document.forms.namedItem("myForm");
+    console.log(form);
+    form.addEventListener("submit", function(e){
+        e.preventDefault();
+        createMessage();
+    })
+
+    function createMessage() {
+        console.log("submitted")
+        const formData = new FormData(form);
+        console.log(formData);
+        fetch(url,{
+            method:"POST",
+            body:formData
+        }).then(function(response){
+            return response.json()
+        }).then(function(data){
+            console.log(data);
+            let tempMessage = "";
+            if(data.status === 200){
+                tempMessage = "Your feedback has been received. Ticket #"+data.value;
+                form.reset();
+            }else{
+                tempMessage = "Something went wrong with your submition!"
+            }
+            
+            document.querySelector(".output").innerHTML = tempMessage;
+
+        })
+    }
+
+
+
+    </script>
+    
+</body>
+</html>
