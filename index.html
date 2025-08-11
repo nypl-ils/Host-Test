@@ -41,6 +41,11 @@
             text-align: center;
             color: #e20d0d;
         }
+        #submitButton{
+            width: 150px;
+            display: block;
+            margin: 0 auto;
+        }
        
     </style>
 </head>
@@ -87,13 +92,14 @@
             <span class="spinner-border spinner-border-md d-none" role="status" aria-hidden="true" id="formSpinner"></span>
         </div>
         
+        <div class="output"></div>
+        <div class="errorMsg"></div>
     
     </form>
-    <div class="output"></div>
-    <div class="errorMsg"></div>
+   
     <script>
     //Ajax call here using fetch
-    const url = "https://script.google.com/macros/s/AKfycbzPHXm5X4AN7gDdqAadyF3M2hM96aXI7jxlBHpLDmJI7OSu7eH6hh-4D0jM5r3Cojq6/exec"
+    const url = "https://script.google.com/macros/s/AKfycbwfknPtWibD5jQ9QfZs3BiOsJROz8pX4x3OJUJwgDPhkeE7QIwn-oNfcoFT8nhqQA/exec"
 
     const form = document.forms.namedItem("myForm");
     console.log(form);
