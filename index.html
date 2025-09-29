@@ -33,11 +33,11 @@
             color: white;
         }
         .output{
-            font-family: cursive;
+            /*font-family: cursive;*/
             text-align: center;
         }
         .errorMsg{
-            font-family: cursive;
+            /*font-family: cursive;*/
             text-align: center;
             color: #e20d0d;
         }
@@ -170,7 +170,9 @@
             document.querySelector(".output").innerHTML = tempMessage;
             formSpinner.classList.add('d-none');
             submitButton.disabled = false;
-
+            setTimeout(function() {
+                window.location.reload();
+            }, 30000); // 30000 milliseconds = 30 second
         })
     }
 
